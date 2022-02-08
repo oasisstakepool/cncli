@@ -10,7 +10,7 @@ This command validates that the remote server is on the given network and return
 
 ```bash
 cncli ping --help
-cncli-ping 0.1.0
+cncli-ping 4.0.4
 
 USAGE:
     cncli ping [OPTIONS] --host <host>
@@ -105,14 +105,14 @@ This command connects to a remote node and synchronizes blocks to a local sqlite
 
 ```bash
 cncli sync --help
-cncli-sync 0.5.10
+cncli-sync 4.0.4
 
 USAGE:
     cncli sync [FLAGS] [OPTIONS] --host <host>
 
 FLAGS:
         --help          Prints help information
-        --no-service    Exit at 100% synced.
+        --no-service    Exit at 100% sync'd.
     -V, --version       Prints version information
 
 OPTIONS:
@@ -164,7 +164,7 @@ This simple command gives you an ok if the database is fully synced. It will ret
 
 ```bash
 cncli status --help
-cncli-status 0.2.5
+cncli-status 4.0.4
 
 USAGE:
     cncli status [OPTIONS] --byron-genesis <byron-genesis> --shelley-genesis <shelley-genesis>
@@ -216,7 +216,7 @@ This command validates that a block hash or partial block hash is on-chain. You 
 
 ```bash
 cncli validate --help
-cncli-validate 0.1.0
+cncli-validate 4.0.4
 
 USAGE:
     cncli validate [OPTIONS] --hash <hash>
@@ -291,7 +291,7 @@ This command calculates the epoch nonce value. This command requires that you us
 
 ```bash
 $ cncli nonce --help
-cncli-nonce 4.0.0
+cncli-nonce 4.0.4
 
 USAGE:
     cncli nonce [OPTIONS] --byron-genesis <byron-genesis> --shelley-genesis <shelley-genesis>
@@ -349,7 +349,8 @@ echo "\`BCSH  - $SLOTS \`🎰\`,  $PERFORMANCE% \`🍀max, \`$IDEAL\` 🧱ideal"
 #### Show Leaderlog Help
 
 ```bash
-cncli-leaderlog 4.0.1
+cncli leaderlog --help
+cncli-leaderlog 4.0.4
 
 USAGE:
     cncli leaderlog [OPTIONS] --active-stake <active-stake> --byron-genesis <byron-genesis> --pool-id <pool-id> --pool-stake <pool-stake> --pool-vrf-skey <pool-vrf-skey> --shelley-genesis <shelley-genesis>
@@ -438,7 +439,7 @@ It is important to point this command at your core nodes. This will help pooltoo
 
 ```bash
 cncli sendtip --help
-cncli-sendtip 0.2.2
+cncli-sendtip 4.0.4
 
 USAGE:
     cncli sendtip [OPTIONS] --cardano-node <cardano-node>
@@ -508,7 +509,7 @@ The sendslots command securely sends pooltool the number of slots you have assig
 
 ```bash
 cncli sendslots --help
-cncli-sendslots 0.3.1
+cncli-sendslots 4.0.4
 
 USAGE:
     cncli sendslots [OPTIONS] --byron-genesis <byron-genesis> --shelley-genesis <shelley-genesis>
@@ -551,24 +552,25 @@ This command signs an arbitrary message string with the pool's vrf.skey. The out
 
 ```bash
 $ cncli sign --help
-cncli-sign 3.1.0
+cncli-sign 4.0.4
 
 USAGE:
-    cncli sign --message <message> --pool-vrf-skey <pool-vrf-skey>
+    cncli sign --domain <domain> --nonce <nonce> --pool-vrf-skey <pool-vrf-skey>
 
 FLAGS:
     -h, --help       Prints help information
     -V, --version    Prints version information
 
 OPTIONS:
-        --message <message>                text message to sign
+        --domain <domain>                  validating domain e.g. pooltool.io
+        --nonce <nonce>                    nonce value in lower-case hex
         --pool-vrf-skey <pool-vrf-skey>    pool's vrf.skey file
 ```
 
 #### Sign a message
 
 ```bash
-$ cncli sign --message "pooltool.io" --pool-vrf-skey pool.vrf.skey
+$ cncli sign --domain "pooltool.io" --nonce 5bba572be9f7abafbfbbc7b440bfa95ac1b881a75b6008285daf72a59fabe48e --pool-vrf-skey pool.vrf.skey
 ```
 
 ##### Sign Result
@@ -588,17 +590,18 @@ This command verifies the signature that was used to sign an arbitrary message s
 
 ```bash
 $ cncli verify --help
-cncli-verify 3.1.0
+cncli-verify 4.0.4
 
 USAGE:
-    cncli verify --message <message> --pool-vrf-vkey <pool-vrf-vkey> --pool-vrf-vkey-hash <pool-vrf-vkey-hash> --signature <signature>
+    cncli verify --domain <domain> --nonce <nonce> --pool-vrf-vkey <pool-vrf-vkey> --pool-vrf-vkey-hash <pool-vrf-vkey-hash> --signature <signature>
 
 FLAGS:
     -h, --help       Prints help information
     -V, --version    Prints version information
 
 OPTIONS:
-        --message <message>                          text message to verify
+        --domain <domain>                            validating domain e.g. pooltool.io
+        --nonce <nonce>                              nonce value in lower-case hex
         --pool-vrf-vkey <pool-vrf-vkey>              pool's vrf.vkey file
         --pool-vrf-vkey-hash <pool-vrf-vkey-hash>
             pool's vrf hash in hex retrieved from 'cardano-cli query pool-params...'
@@ -609,7 +612,7 @@ OPTIONS:
 #### Verify a message
 
 ```bash
-$ cncli verify --message "pooltool.io" --pool-vrf-vkey pool.vrf.vkey --pool-vrf-vkey-hash f58bf0111f8e9b233c2dcbb72b5ad400330cf260c6fb556eb30cefd387e5364c --signature 8aff63e961aad02852dbb7905f9215d7b1d4ff63f734f7f1b82184004112cca798719941ccf54beca360f844632c2c070e6f8ef11ca177efa240c712ef3d7e9f283db68278088acbe1af381cc9673e08
+$ cncli verify --domain "pooltool.io" --nonce 5bba572be9f7abafbfbbc7b440bfa95ac1b881a75b6008285daf72a59fabe48e --pool-vrf-vkey pool.vrf.vkey --pool-vrf-vkey-hash f58bf0111f8e9b233c2dcbb72b5ad400330cf260c6fb556eb30cefd387e5364c --signature 8aff63e961aad02852dbb7905f9215d7b1d4ff63f734f7f1b82184004112cca798719941ccf54beca360f844632c2c070e6f8ef11ca177efa240c712ef3d7e9f283db68278088acbe1af381cc9673e08
 ```
 
 ##### Verify Result
